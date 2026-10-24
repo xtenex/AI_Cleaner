@@ -1,0 +1,43 @@
+Instalacion
+
+#Entorno Virtual
+$ mkdir mi_directorio
+$ python3 -m venv mi_directorio
+$ cd mi_directorio
+$ source bin/activate
+
+# Dependencias Python
+pip install python-docx openpyxl python-pptx Pillow pypdf
+
+# ExifTool (recomendado, edición lossless)
+# Windows:
+choco install exiftool
+# O descarga manual: https://exiftool.org/download.html   
+
+Como se usa:
+# Limpiar imagen (elimina C2PA, XMP, IPTC, EXIF, prompts)
+python limpiador_metadata.py foto.jpg -v
+
+# Hacer un DOCX pasar como creado por Word
+python limpiador_metadata.py documento.docx -p word
+
+# Hacer un DOCX pasar como creado por LibreOffice
+python limpiador_metadata.py documento.docx -p libreoffice
+
+# Hacer un ODT pasar como OpenOffice
+python limpiador_metadata.py archivo.odt -p openoffice
+
+# Autor personalizado
+python limpiador_metadata.py doc.docx --author "María López"
+
+# Procesar carpeta completa
+python limpiador_metadata.py ./carpeta -r -v   
+
+Qué hace exactamente
+Tipo		Acciones
+Imágenes	Elimina C2PA/JUMBF, XMP (prompts, model, seed), IPTC (DigitalSourceType), EXIF completo, CBOR, PNG text chunks. Usa ExifTool (lossless) o Pillow (fallback).
+DOCX/XLSX/PPTX	Cambia author, last_modified_by, created, modified, revision. Edita app.xml para cambiar el campo Application. Elimina customProperties.xml.
+ODT/ODS/ODP	Edita meta.xml: dc:creator, generator, fechas. Elimina metadata:generation-info.
+PDF		Cambia /Author, /Creator, /Producer, fechas.
+
+Nota importante: Esto elimina metadatos, pero no borra marcas de agua en píxeles (como SynthID de Google). Para eso se necesitarían técnicas de regeneración de imagen.

@@ -1,0 +1,25 @@
+# ── MODO DETECT: Analizar un archivo ──
+
+# Analizar un DOCX
+python analizador_metadata.py detect informe.docx
+
+# Analizar un PDF
+python analizador_metadata.py detect contrato.pdf
+
+# Analizar carpeta completa
+python analizador_metadata.py detect ./documentos -r
+
+# Salida en JSON (para integrar con otros scripts)
+python analizador_metadata.py detect informe.docx --json
+
+# Ver todos los metadatos
+python analizador_metadata.py detect informe.docx -v
+
+# ── MODO DIFF: Comparar original vs limpio ──
+
+# Comparar dos DOCX
+python analizador_metadata.py diff original.docx limpio.docx
+
+# Con etiquetas personalizadas
+python analizador_metadata.py diff antes.pdf despues.pdf --label-a "Con IA" --label-b "Limpio"   
+
